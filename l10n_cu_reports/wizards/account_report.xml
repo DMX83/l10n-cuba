@@ -94,16 +94,36 @@
               sequence="20"
               parent="account.menu_finance_reports"/>
 
+    <record id="action_account_aged_receivable" model="ir.actions.act_window">
+        <field name="name">Saldo vencido por cobrar</field>
+        <field name="res_model">account.aged.trial.balance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="accounting_pdf_reports.account_aged_balance_view"/>
+        <field name="target">new</field>
+        <field name="context" eval="{'default_result_selection': 'customer'}"/>
+    </record>
+
+    <record id="action_account_aged_payable" model="ir.actions.act_window">
+        <field name="name">Saldo vencido por pagar</field>
+        <field name="res_model">account.aged.trial.balance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="accounting_pdf_reports.account_aged_balance_view"/>
+        <field name="target">new</field>
+        <field name="context" eval="{'default_result_selection': 'supplier'}"/>
+    </record>
+
     <menuitem id="accounting_pdf_reports.menu_aged_receivable"
               name="Saldo vencido por cobrar"
               sequence="20"
-              action="accounting_pdf_reports.action_account_aged_receivable"
+              action="l10n_cu_reports.action_account_aged_receivable"
               parent="accounting_pdf_reports.menu_finance_partner_reports"/>
 
     <menuitem id="accounting_pdf_reports.menu_aged_payable"
               name="Saldo vencido por pagar"
               sequence="30"
-              action="accounting_pdf_reports.action_account_aged_payable"
+              action="l10n_cu_reports.action_account_aged_payable"
               parent="accounting_pdf_reports.menu_finance_partner_reports"/>
 
     <menuitem id="accounting_pdf_reports.menu_finance_audit_reports"
