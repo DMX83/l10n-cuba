@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
                 <field name="plan_id" position="after">
                     <field name="element_id" invisible="True" />
-                    <field name="element_detailed" attrs="{'invisible': [('element_id', '=', 'True')]}" widget="boolean_toggle"/>
+                    <field name="element_detailed" invisible="element_id" widget="boolean_toggle"/>
                 </field>
             </field>
         </record>
@@ -38,7 +38,7 @@
                     <group string="Default account values for this group new accounts" colspan="2">
                         <field name="account_type"/>
                         <field name="expense_element_detailed" widget="boolean_toggle"/>
-                        <field name="reconcile" attrs="{'invisible': [('account_type', 'in', ('asset_cash', 'liability_credit_card'))]}" widget="boolean_toggle"/>
+                        <field name="reconcile" invisible="account_type in ('asset_cash', 'liability_credit_card')" widget="boolean_toggle"/>
                     </group>
             </field>
         </field>
