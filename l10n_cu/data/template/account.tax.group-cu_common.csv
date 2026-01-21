@@ -1,0 +1,2 @@
+"id","country_id","name","tax_receivable_account_id","tax_payable_account_id"
+"cu_tax_group_sale","base.cu","Impuestos sobre las ventas (Sector Privado)","",""
