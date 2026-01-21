@@ -207,7 +207,7 @@ result = inputs.ASIG_VACACIONES and inputs.ASIG_VACACIONES.amount
 result = inputs.ASIG_VACACIONES and inputs.ASIG_VACACIONES.amount or 0
             </field>
             <field name="appears_on_payslip" eval="True"/>
-            <field name="input_ids" eval="[(5, 0, 0),
+            <field name="input_ids" eval="[
                 (0,0, {
                     'name': 'ASIG_VACACIONES',
                     'code': 'ASIG_VACACIONES',
@@ -228,7 +228,7 @@ result = inputs.ASIG_PROVISIONES and inputs.ASIG_PROVISIONES.amount
 result = inputs.ASIG_PROVISIONES and inputs.ASIG_PROVISIONES.amount or 0
             </field>
             <field name="appears_on_payslip" eval="True"/>
-            <field name="input_ids" eval="[(5, 0, 0),
+            <field name="input_ids" eval="[
                 (0,0, {
                     'name': 'ASIG_PROVISIONES',
                     'code': 'ASIG_PROVISIONES',
@@ -249,7 +249,7 @@ result = inputs.UTILIDAD and inputs.UTILIDAD.amount
 result = inputs.UTILIDAD and inputs.UTILIDAD.amount or 0
             </field>
             <field name="appears_on_payslip" eval="True"/>
-            <field name="input_ids" eval="[(5, 0, 0),
+            <field name="input_ids" eval="[
                 (0,0, {
                     'name': 'Utilidad',
                     'code': 'UTILIDAD',
