@@ -90,8 +90,9 @@ class AccountGroup(models.Model):
         result = super(AccountGroup, self).unlink()        
         return result
 
-    def _adapt_parent_account_group(self):
-       pass
+    def _adapt_parent_account_group(self, company=None):
+        # Odoo 18 passes company when loading chart templates; keep compatibility.
+        pass
 
     def _adapt_accounts_for_account_groups(self, account_ids=None):
         """Ensure consistency between accounts and account groups.
