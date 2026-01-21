@@ -10,20 +10,6 @@
             </field>
         </field>
     </record>
-    <record id="view_account_search_inherit" model="ir.ui.view">
-        <field name="name">view.account.search.inherit</field>
-        <field name="model">account.account</field>
-        <field name="inherit_id" ref="account.view_account_search"/>
-        <field name="arch" type="xml">
-            <xpath expr="//searchpanel[@class='account_root']" position="replace">
-                <searchpanel>
-                    <field name="group_id" icon="fa-filter"/>
-                </searchpanel>
-            </xpath>
-        </field>
-    </record>
-
-   
     <!-- analytic.account -->
 
     <record id="account_analytic_account_view_form_inherit" model="ir.ui.view">
