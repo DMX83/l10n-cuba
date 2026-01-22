@@ -87,6 +87,7 @@ class ReportFinancial(models.AbstractModel):
                     #financial reports for Assets, liabilities...)
                     flag = False
                     account = self.env['account.account'].browse(account_id)
+                    company_currency = (account.company_ids[:1] or self.env.company).currency_id
                     vals = {
                         'name': account.code + ' ' + account.name,
                         'visible': report.visible,
@@ -97,14 +98,14 @@ class ReportFinancial(models.AbstractModel):
                         'apertura': report.apertura,
                         # 'level': (report.display_detail == 'detail_with_hierarchy' or data.get('display_detail') == 'detail_with_hierarchy') and 4,
                         'level': data.get('display_detail') == 'detail_with_hierarchy' and 4,
-                        'account_type': account.internal_type,
+                        'account_type': account.account_type,
                     }
                     if data['debit_credit']:
                         vals['debit'] = value['debit']
                         vals['credit'] = value['credit']
-                        if not account.company_id.currency_id.is_zero(vals['debit']) or not account.company_id.currency_id.is_zero(vals['credit']):
+                        if not company_currency.is_zero(vals['debit']) or not company_currency.is_zero(vals['credit']):
                             flag = True
-                    if not account.company_id.currency_id.is_zero(vals['balance']):
+                    if not company_currency.is_zero(vals['balance']):
                         flag = True
                     if flag:
                         sub_lines.append(vals)
@@ -174,7 +175,8 @@ def layout_header(self, workbook, worksheet, data):
                                          })
     cpaginado_efe.set_font_size(10)
     cpaginado_efe.set_text_wrap()
-    worksheet.merge_range('H1:H2', '(%s)' % data['context']['efe'], cpaginado_efe)
+    context = data.get('context') or self.env.context
+    worksheet.merge_range('H1:H2', '(%s)' % context.get('efe', ''), cpaginado_efe)
 
     cmep = workbook.add_format({'bold': False})
     cmep.set_font_size(10)
@@ -192,8 +194,16 @@ def layout_header(self, workbook, worksheet, data):
     worksheet.merge_range('A4:D4', data['form']['date_to'], normal)
     worksheet.merge_range('E4:H4', 'Pesos cubanos con dos decimales', normal)
 
-    context = data.get('context')
-    active_company = self.env["res.company"].browse(context.get('allowed_company_ids'))
+    allowed_company_ids = context.get('allowed_company_ids')
+    if not allowed_company_ids:
+        company_id = data.get('form', {}).get('company_id')
+        if isinstance(company_id, (list, tuple)) and len(company_id) == 2:
+            company_id = company_id[0]
+        if company_id:
+            allowed_company_ids = [company_id]
+    if not allowed_company_ids:
+        allowed_company_ids = [self.env.company.id]
+    active_company = self.env["res.company"].browse(allowed_company_ids)
 
     centidad = workbook.add_format({
         'border': 1,
