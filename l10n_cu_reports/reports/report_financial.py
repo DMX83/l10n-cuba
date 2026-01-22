@@ -514,3 +514,61 @@ class ReportFinancialXlsxEVAB(models.AbstractModel):
                 row += 1
 
         layout_footer(self, workbook, sheet, data, row)
+
+
+class ReportFinancialXlsx5927_00(models.AbstractModel):
+    _name = 'report.l10n_cu_reports_xlsx.report_financial_xls_5927_00'
+    _inherit = ['report.report_xlsx.abstract', 'report.accounting_pdf_reports.report_financial']
+    _description = 'Report Financial XLSX 5927-00'
+
+    def generate_xlsx_report(self, workbook, data, financial_report):
+        account_lines = self.get_account_lines(data.get('form'))
+        sheet = workbook.add_worksheet('Estado de pagos (5927-00)')
+        sheet.set_margins(0.3, 0.3)
+        sheet.center_horizontally()
+
+        layout_header(self, workbook, sheet, data)
+
+        cconcepto = workbook.add_format({
+            'bold': True,
+            'border': 1,
+            'align': 'vcenter',
+        })
+        cconcepto.set_align('center')
+        cconcepto.set_font_size(10)
+        sheet.set_row(8, 30)
+
+        sheet.merge_range('A9:C9', "CONCEPTOS", cconcepto)
+        sheet.write('D9:D9', "Filas", cconcepto)
+        sheet.write('E9', "N", cconcepto)
+        cconcepto.set_text_wrap()
+        sheet.write('F9', "Plan Anual", cconcepto)
+        sheet.write('G9', "Plan hasta la fecha", cconcepto)
+        sheet.write('H9', "Real hasta la fecha", cconcepto)
+
+        cconcepto_body = workbook.add_format({
+            'bold': True,
+            'border': 1,
+            'align': 'left',
+        })
+        cconcepto_body.set_font_size(10)
+        cconcepto_body.set_text_wrap()
+
+        cnumber = workbook.add_format({
+            'bold': True,
+            'border': 1,
+            'align': 'right',
+        })
+        cnumber.set_font_size(10)
+        row = 9
+        for line in account_lines:
+            if line['visible'] and line['level'] != 0:
+                sheet.merge_range(row, 0, row, 2, line.get('name'), cconcepto_body)
+                sheet.write(row, 3, line.get('sequence'), cnumber)
+                sheet.write(row, 4, '', cnumber)
+                sheet.write(row, 5, line.get('plan_anual', 0), cnumber)
+                sheet.write(row, 6, line.get('apertura', ''), cnumber)
+                sheet.write(row, 7, line.get('balance'), cnumber)
+                row += 1
+
+        layout_footer(self, workbook, sheet, data, row)
