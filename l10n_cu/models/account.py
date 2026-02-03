@@ -11,12 +11,12 @@ class AccountAccount(models.Model):
     expense_element_detailed = fields.Boolean(string='Expense element detailed?', 
         compute='_compute_expense_element_detailed',readonly=False )
     
-    @api.depends('code','group_id','group_id.account_type','group_id.expense_element_detailed')
+    @api.depends('code')
     def _compute_expense_element_detailed(self):
         for record in self:
             record.expense_element_detailed=record.group_id.expense_element_detailed   
     
-    @api.depends('code','group_id','group_id.account_type','group_id.expense_element_detailed')
+    @api.depends('code')
     def _compute_account_type(self):
         for record in self:
             super(AccountAccount, record)._compute_account_type()
