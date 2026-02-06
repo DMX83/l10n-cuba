@@ -8,6 +8,11 @@ Repositorio de código del proyecto de localización cubana para el software de 
 
 Mantenido por la Comunidad Cubana de Odoo (https://cco-web.odoo.com), con participación de entidades estatales miembros oficiales de la comunidad cubana de Odoo.
 
+## 📚 Documentación Técnica
+
+- **[PROJECT_ANALYSIS.md](PROJECT_ANALYSIS.md)** - Análisis técnico completo del proyecto (Español) - Ingeniería reversa desde perspectiva de programador senior
+- **[TECHNICAL_SUMMARY.md](TECHNICAL_SUMMARY.md)** - Resumen técnico rápido para desarrolladores (English)
+
 <!-- /!\ do not modify below this line -->
 
 <!-- prettier-ignore-start -->
